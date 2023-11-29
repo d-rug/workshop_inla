@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.313">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>YOUR WORKSHOP TITLE - Example</title>
+<title>Bayesian modeling with INLA - Examples</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -90,7 +90,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -106,10 +107,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02_example.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Example</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02_examples.html"><span class="chapter-title">Examples</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -124,10 +125,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <img src="https://github.com/d-rug/d-rug.github.io/raw/main/DRUG_final_cobalt.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">YOUR WORKSHOP TITLE</a> 
+      <a href="./">Bayesian modeling with INLA</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/d-rug/YOUR_REPO" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="./YOUR-WORKSHOP-TITLE.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://github.com/d-rug/workshop_inla" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./Bayesian-modeling-with-INLA.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -145,12 +146,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction</span></a>
+  <a href="./01_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Resources</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02_example.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Example</span></a>
+  <a href="./02_examples.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Examples</span></a>
   </div>
 </li>
     </ul>
@@ -163,8 +164,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#quarto" id="toc-quarto" class="nav-link active" data-scroll-target="#quarto">Quarto</a></li>
-  <li><a href="#running-code" id="toc-running-code" class="nav-link" data-scroll-target="#running-code">Running Code</a></li>
+  <li><a href="#oats-random-effect-model" id="toc-oats-random-effect-model" class="nav-link active" data-scroll-target="#oats-random-effect-model">Oats random effect model</a></li>
   </ul>
 </nav>
     </div>
@@ -173,7 +173,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Example</span></h1>
+<h1 class="title"><span class="chapter-title">Examples</span></h1>
 </div>
 
 
@@ -188,26 +188,112 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="quarto" class="level2">
-<h2 class="anchored" data-anchor-id="quarto">Quarto</h2>
-<p>Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <a href="https://quarto.org" class="uri">https://quarto.org</a>.</p>
-</section>
-<section id="running-code" class="level2">
-<h2 class="anchored" data-anchor-id="running-code">Running Code</h2>
-<p>When you click the <strong>Render</strong> button a document will be generated that includes both content and the output of embedded code. You can embed code like this:</p>
+<section id="oats-random-effect-model" class="level2">
+<h2 class="anchored" data-anchor-id="oats-random-effect-model">Oats random effect model</h2>
+<p>This example uses data of an agricultural trial where different varieties of oats were grown with different amounts of nitrogen fertilizer, and the yield was measured for each plot. The pots were grouped into blocks that are treated as random effects because they are geographically contiguous and are separated from each other. So we expect plots within blocks to be more alike than those in different blocks.</p>
+<p>First, import the data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(oats)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>oats<span class="sc">$</span>nitrogen <span class="ot">=</span> <span class="fu">substr</span>(oats<span class="sc">$</span>N, <span class="dv">1</span>, <span class="dv">3</span>) <span class="sc">|&gt;</span> <span class="fu">as.numeric</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<p>You can add options to executable code like this</p>
+<p><code>lme4</code> model:</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: Matrix</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>lme_oats <span class="ot">=</span> <span class="fu">lmer</span>(Y <span class="sc">~</span> nitrogen <span class="sc">+</span> V <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>B), <span class="at">data=</span>oats)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lme_oats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 4</code></pre>
+<pre><code>Linear mixed model fit by REML ['lmerMod']
+Formula: Y ~ nitrogen + V + (1 | B)
+   Data: oats
+
+REML criterion at convergence: 588
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-1.84069 -0.80849  0.04022  0.70484  2.22148 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ B        (Intercept) 245.0    15.65   
+ Residual             234.7    15.32   
+Number of obs: 72, groups:  B, 6
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept)   82.400      7.516  10.964
+nitrogen      73.667      8.075   9.123
+VMarvellous    5.292      4.423   1.196
+VVictory      -6.875      4.423  -1.554
+
+Correlation of Fixed Effects:
+            (Intr) nitrgn VMrvll
+nitrogen    -0.322              
+VMarvellous -0.294  0.000       
+VVictory    -0.294  0.000  0.500</code></pre>
 </div>
 </div>
-<p>The <code>echo: false</code> option disables the printing of code (only output is displayed).</p>
+<p><code>INLA</code> model:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(INLA)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: sp</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>This is INLA_23.09.09 built 2023-10-16 17:35:11 UTC.
+ - See www.r-inla.org/contact-us for how to get help.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>inla_oats <span class="ot">=</span> <span class="fu">inla</span>(Y <span class="sc">~</span> nitrogen <span class="sc">+</span> V <span class="sc">+</span> <span class="fu">f</span>(B, <span class="at">model=</span><span class="st">'iid'</span>), <span class="at">data=</span>oats)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(inla_oats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+   c("inla.core(formula = formula, family = family, contrasts = contrasts, 
+   ", " data = data, quantiles = quantiles, E = E, offset = offset, ", " 
+   scale = scale, weights = weights, Ntrials = Ntrials, strata = strata, 
+   ", " lp.scale = lp.scale, link.covariates = link.covariates, verbose = 
+   verbose, ", " lincomb = lincomb, selection = selection, control.compute 
+   = control.compute, ", " control.predictor = control.predictor, 
+   control.family = control.family, ", " control.inla = control.inla, 
+   control.fixed = control.fixed, ", " control.mode = control.mode, 
+   control.expert = control.expert, ", " control.hazard = control.hazard, 
+   control.lincomb = control.lincomb, ", " control.update = 
+   control.update, control.lp.scale = control.lp.scale, ", " 
+   control.pardiso = control.pardiso, only.hyperparam = only.hyperparam, 
+   ", " inla.call = inla.call, inla.arg = inla.arg, num.threads = 
+   num.threads, ", " keep = keep, working.directory = working.directory, 
+   silent = silent, ", " inla.mode = inla.mode, safe = FALSE, debug = 
+   debug, .parent.frame = .parent.frame)" ) 
+Time used:
+    Pre = 1.68, Running = 0.984, Post = 0.0312, Total = 2.7 
+Fixed effects:
+              mean     sd 0.025quant 0.5quant 0.975quant   mode kld
+(Intercept) 84.805  5.288     74.485   84.779     95.269 84.780   0
+nitrogen    65.559 10.556     44.584   65.640     86.068 65.638   0
+VMarvellous  5.222  5.961     -6.495    5.223     16.935  5.223   0
+VVictory    -6.722  5.961    -18.432   -6.724      4.998 -6.724   0
+
+Random effects:
+  Name    Model
+    B IID model
+
+Model hyperparameters:
+                                            mean      sd 0.025quant 0.5quant
+Precision for the Gaussian observations    0.002    0.00      0.002    0.002
+Precision for B                         7174.354 1978.87   3633.184 7053.491
+                                        0.975quant     mode
+Precision for the Gaussian observations   3.00e-03    0.002
+Precision for B                           1.12e+04 6931.326
+
+Marginal log-Likelihood:  -343.99 
+ is computed 
+Posterior summaries for the linear predictor and the fitted values are computed
+(Posterior marginals needs also 'control.compute=list(return.marginals.predictor=TRUE)')</code></pre>
+</div>
+</div>
 
 
 </section>
@@ -449,7 +535,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./01_intro.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Introduction</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Resources</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

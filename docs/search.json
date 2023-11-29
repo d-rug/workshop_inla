@@ -2,36 +2,43 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "YOUR WORKSHOP TITLE",
+    "title": "Bayesian modeling with INLA",
     "section": "",
-    "text": "Overview\nYOUR DESCRIPTION, LEARNING GOALS, PREREQUISITES, ETC"
+    "text": "INLA"
   },
   {
-    "objectID": "01_intro.html#quarto",
-    "href": "01_intro.html#quarto",
-    "title": "Introduction",
-    "section": "Quarto",
-    "text": "Quarto\nQuarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."
+    "objectID": "index.html#install-inla",
+    "href": "index.html#install-inla",
+    "title": "Bayesian modeling with INLA",
+    "section": "Install INLA",
+    "text": "Install INLA\nFollow the instructions here: https://www.r-inla.org/download-install\nOr, try this in R (copied from the link):\n\ninstall.packages(\"INLA\",repos=c(getOption(\"repos\"),INLA=\"https://inla.r-inla-download.org/R/stable\"), dep=TRUE)"
   },
   {
-    "objectID": "01_intro.html#running-code",
-    "href": "01_intro.html#running-code",
-    "title": "Introduction",
-    "section": "Running Code",
-    "text": "Running Code\nWhen you click the Render button a document will be generated that includes both content and the output of embedded code. You can embed code like this:\n\n1 + 1\n\n[1] 2\n\n\nYou can add options to executable code like this\n\n\n[1] 4\n\n\nThe echo: false option disables the printing of code (only output is displayed)."
+    "objectID": "01_intro.html#gentle-introduction-to-the-math-of-inla",
+    "href": "01_intro.html#gentle-introduction-to-the-math-of-inla",
+    "title": "Resources",
+    "section": "Gentle introduction to the math of INLA",
+    "text": "Gentle introduction to the math of INLA\nThere’s a blog at Precision Analytics that does a good job of describing the math of INLA without getting bogged down in details and derivations: https://www.precision-analytics.ca/articles/a-gentle-inla-tutorial/"
   },
   {
-    "objectID": "02_example.html#quarto",
-    "href": "02_example.html#quarto",
-    "title": "Example",
-    "section": "Quarto",
-    "text": "Quarto\nQuarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."
+    "objectID": "01_intro.html#examples-from-statistical-rethinking",
+    "href": "01_intro.html#examples-from-statistical-rethinking",
+    "title": "Resources",
+    "section": "Examples from Statistical Rethinking",
+    "text": "Examples from Statistical Rethinking\nJulian Faraway has re-worked many of the examples from the “Statistical Rethinking” book using INLA: https://julianfaraway.github.io/brinla/"
   },
   {
-    "objectID": "02_example.html#running-code",
-    "href": "02_example.html#running-code",
-    "title": "Example",
-    "section": "Running Code",
-    "text": "Running Code\nWhen you click the Render button a document will be generated that includes both content and the output of embedded code. You can embed code like this:\n\n1 + 1\n\n[1] 2\n\n\nYou can add options to executable code like this\n\n\n[1] 4\n\n\nThe echo: false option disables the printing of code (only output is displayed)."
+    "objectID": "01_intro.html#tutorial",
+    "href": "01_intro.html#tutorial",
+    "title": "Resources",
+    "section": "Tutorial",
+    "text": "Tutorial\nThere is a tutorial here that works and does an OK job of explaining itself, but the code is (IMO) poorly written. That makes it a little difficult to really understand the examples. However it has the benefit that the code all works the way the texts says it will!!: https://ourcodingclub.github.io/tutorials/inla/"
+  },
+  {
+    "objectID": "02_examples.html#oats-random-effect-model",
+    "href": "02_examples.html#oats-random-effect-model",
+    "title": "Examples",
+    "section": "Oats random effect model",
+    "text": "Oats random effect model\nThis example uses data of an agricultural trial where different varieties of oats were grown with different amounts of nitrogen fertilizer, and the yield was measured for each plot. The pots were grouped into blocks that are treated as random effects because they are geographically contiguous and are separated from each other. So we expect plots within blocks to be more alike than those in different blocks.\nFirst, import the data:\n\nlibrary(MASS)\ndata(oats)\noats$nitrogen = substr(oats$N, 1, 3) |&gt; as.numeric()\n\nlme4 model:\n\nlibrary(lme4)\n\nLoading required package: Matrix\n\nlme_oats = lmer(Y ~ nitrogen + V + (1|B), data=oats)\nsummary(lme_oats)\n\nLinear mixed model fit by REML ['lmerMod']\nFormula: Y ~ nitrogen + V + (1 | B)\n   Data: oats\n\nREML criterion at convergence: 588\n\nScaled residuals: \n     Min       1Q   Median       3Q      Max \n-1.84069 -0.80849  0.04022  0.70484  2.22148 \n\nRandom effects:\n Groups   Name        Variance Std.Dev.\n B        (Intercept) 245.0    15.65   \n Residual             234.7    15.32   \nNumber of obs: 72, groups:  B, 6\n\nFixed effects:\n            Estimate Std. Error t value\n(Intercept)   82.400      7.516  10.964\nnitrogen      73.667      8.075   9.123\nVMarvellous    5.292      4.423   1.196\nVVictory      -6.875      4.423  -1.554\n\nCorrelation of Fixed Effects:\n            (Intr) nitrgn VMrvll\nnitrogen    -0.322              \nVMarvellous -0.294  0.000       \nVVictory    -0.294  0.000  0.500\n\n\nINLA model:\n\nlibrary(INLA)\n\nLoading required package: sp\n\n\nThis is INLA_23.09.09 built 2023-10-16 17:35:11 UTC.\n - See www.r-inla.org/contact-us for how to get help.\n\ninla_oats = inla(Y ~ nitrogen + V + f(B, model='iid'), data=oats)\nsummary(inla_oats)\n\n\nCall:\n   c(\"inla.core(formula = formula, family = family, contrasts = contrasts, \n   \", \" data = data, quantiles = quantiles, E = E, offset = offset, \", \" \n   scale = scale, weights = weights, Ntrials = Ntrials, strata = strata, \n   \", \" lp.scale = lp.scale, link.covariates = link.covariates, verbose = \n   verbose, \", \" lincomb = lincomb, selection = selection, control.compute \n   = control.compute, \", \" control.predictor = control.predictor, \n   control.family = control.family, \", \" control.inla = control.inla, \n   control.fixed = control.fixed, \", \" control.mode = control.mode, \n   control.expert = control.expert, \", \" control.hazard = control.hazard, \n   control.lincomb = control.lincomb, \", \" control.update = \n   control.update, control.lp.scale = control.lp.scale, \", \" \n   control.pardiso = control.pardiso, only.hyperparam = only.hyperparam, \n   \", \" inla.call = inla.call, inla.arg = inla.arg, num.threads = \n   num.threads, \", \" keep = keep, working.directory = working.directory, \n   silent = silent, \", \" inla.mode = inla.mode, safe = FALSE, debug = \n   debug, .parent.frame = .parent.frame)\" ) \nTime used:\n    Pre = 1.68, Running = 0.984, Post = 0.0312, Total = 2.7 \nFixed effects:\n              mean     sd 0.025quant 0.5quant 0.975quant   mode kld\n(Intercept) 84.805  5.288     74.485   84.779     95.269 84.780   0\nnitrogen    65.559 10.556     44.584   65.640     86.068 65.638   0\nVMarvellous  5.222  5.961     -6.495    5.223     16.935  5.223   0\nVVictory    -6.722  5.961    -18.432   -6.724      4.998 -6.724   0\n\nRandom effects:\n  Name    Model\n    B IID model\n\nModel hyperparameters:\n                                            mean      sd 0.025quant 0.5quant\nPrecision for the Gaussian observations    0.002    0.00      0.002    0.002\nPrecision for B                         7174.354 1978.87   3633.184 7053.491\n                                        0.975quant     mode\nPrecision for the Gaussian observations   3.00e-03    0.002\nPrecision for B                           1.12e+04 6931.326\n\nMarginal log-Likelihood:  -343.99 \n is computed \nPosterior summaries for the linear predictor and the fitted values are computed\n(Posterior marginals needs also 'control.compute=list(return.marginals.predictor=TRUE)')"
   }
 ]
